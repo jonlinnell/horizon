@@ -1,0 +1,9 @@
+{
+  "port": 9003,
+  "createDefaultAdmin": true,
+  "defaultAdminPassword": "setyourdefaultadminpasswordhere",
+  "tls": {
+    "certificate": "/etc/letsencrypt/live/yoursite/fullchain.pem",
+    "key": "/etc/letsencrypt/live/yoursite/privkey.pem"
+  }
+}

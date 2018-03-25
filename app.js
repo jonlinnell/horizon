@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-require('dotenv').config()
 const bcrypt = require('bcryptjs')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
@@ -15,12 +14,25 @@ const rfs = require('rotating-file-stream')
 
 require('colors')
 
+if (!fs.existsSync('./config/config.json')) {
+  throw Error('General configuration (./config/config.json) doesn\'t exist.')
+}
+
+if (!fs.existsSync('./config/db.js')) {
+  throw Error('Database configuration (./config/db.js) doesn\'t exist.')
+}
+
+const {
+  port,
+  createDefaultAdmin,
+  defaultAdminPassword,
+  tls
+} = require('./config/config.json')
+
 const models = require('./models')
 const { User } = require('./models')
 
 const app = express()
-
-const port = process.env.API_PORT || 9000
 
 const logDir = path.join(__dirname, 'logs')
 if (!fs.existsSync(logDir)) {
@@ -46,14 +58,14 @@ require('./routes/auth')(app)
 models.sequelize.sync().then(() => {
   console.log(`[${'DB'.bold}] Connection established.`.green)
 
-  if (process.env.CREATE_DEFAULT_ADMIN) {
+  if (createDefaultAdmin) {
     User.findOne({
       where: { username: 'admin' },
       attributes: { exclude: ['password'] }
     })
       .then((user) => {
         if (!user) {
-          const hashedPassword = bcrypt.hashSync(process.env.DEFAULTADMIN || 'not @ password', 8)
+          const hashedPassword = bcrypt.hashSync(defaultAdminPassword, 8)
 
           User.create({
             username: 'admin',
@@ -72,8 +84,8 @@ models.sequelize.sync().then(() => {
 
   if (process.env.NODE_ENV === 'production') {
     const options = {
-      cert: fs.readFileSync(process.env.SSL_CERT),
-      key: fs.readFileSync(process.env.SSL_KEY)
+      cert: fs.readFileSync(tls.certificate),
+      key: fs.readFileSync(tls.certificate)
     }
     https.createServer(options, app).listen(port)
     console.log(`[${'API'.bold}] Service (https) started on ${port}.`.green)
