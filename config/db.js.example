@@ -1,0 +1,18 @@
+const Sequelize = require('sequelize')
+
+module.exports = {
+  development: {
+    dialect: 'sqlite',
+    storage: './db.dev.sqlite',
+    operatorsAliases: Sequelize.Op
+  },
+  production: {
+    dialect: 'mysql',
+    username: 'someuser',
+    password: null,
+    database: 'horizon',
+    host: '127.0.0.1',
+    operatorsAliases: Sequelize.Op,
+    logging: false
+  }
+}
