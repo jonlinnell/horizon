@@ -1,3 +1,4 @@
+const fs = require('fs')
 const jwt = require('jsonwebtoken')
 const Joi = require('joi')
 const bcrypt = require('bcryptjs')
@@ -7,6 +8,8 @@ const verifyToken = require('../lib/verifyToken')
 const { User } = require('../models')
 
 const userCreateSchema = require('../schemas/userCreate')
+
+const secret = fs.readFileSync('./config/secret', 'utf8').trim()
 
 module.exports = (app) => {
   app.post('/auth/register', verifyToken, (req, res) => {
@@ -25,7 +28,7 @@ module.exports = (app) => {
           .then((newUser) => {
             const token = jwt.sign(
               { id: newUser.id },
-              process.env.SECRET,
+              secret,
               { expiresIn: 86400 }
             )
             res.status(200).send({ auth: true, token })
@@ -64,7 +67,7 @@ module.exports = (app) => {
           return res.status(401).send({ auth: false, message: 'Password incorrect', token: null })
         }
 
-        const token = jwt.sign({ id: user.id }, process.env.SECRET, { expiresIn: 86400 })
+        const token = jwt.sign({ id: user.id }, secret, { expiresIn: 86400 })
         return res.status(200).send({ auth: true, token })
       })
       .catch(err => res.status(500).send({ auth: false, message: `A server error occurred. ${err}` }))

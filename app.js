@@ -22,6 +22,10 @@ if (!fs.existsSync('./config/db.js')) {
   throw Error('Database configuration (./config/db.js) doesn\'t exist.')
 }
 
+if (!fs.existsSync('./config/secret')) {
+  throw Error('No secret key file found. Please create one in ./config/secret and chmod to 600.')
+}
+
 const {
   port,
   createDefaultAdmin,
@@ -54,6 +58,7 @@ console.log(`Launching in ${process.env.NODE_ENV || 'development'} mode.`.cyan)
 
 /* Remember to filter fixed routes in the Joi schema */
 require('./routes/auth')(app)
+require('./routes/event')(app)
 
 models.sequelize.sync().then(() => {
   console.log(`[${'DB'.bold}] Connection established.`.green)

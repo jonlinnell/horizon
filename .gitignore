@@ -57,6 +57,7 @@ typings/
 # Environment-specific config
 config.json
 db.js
+secret
 
 # Test database
 db.dev.sqlite
