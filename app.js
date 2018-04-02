@@ -74,7 +74,8 @@ models.sequelize.sync().then(() => {
 
           User.create({
             username: 'admin',
-            password: hashedPassword
+            password: hashedPassword,
+            administrator: true
           })
             .then(() => {
               console.log('Default admin account doesn\'t exist. Creating it.'.yellow)

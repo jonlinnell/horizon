@@ -1,4 +1,3 @@
-/* eslint-disable no-var */
 const fs = require('fs')
 const path = require('path')
 const Sequelize = require('sequelize')
@@ -8,7 +7,7 @@ const env = process.env.NODE_ENV || 'development'
 const config = require(path.join(__dirname, '..', 'config', 'db.js'))[env]
 
 const db = {}
-var sequelize = {}
+let sequelize = {}
 
 if (process.env.DATABASE_URL) {
   sequelize = new Sequelize(process.env.DATABASE_URL, config)

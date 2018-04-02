@@ -31,8 +31,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       allowNull: false
     },
-    imageUrl: DataTypes.STRING,
-    speakers: DataTypes.JSON,
+    speakers: {
+      type: DataTypes.JSON,
+      defaultValue: []
+    },
     deleted: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
