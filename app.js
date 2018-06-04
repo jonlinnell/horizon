@@ -14,15 +14,11 @@ const path = require('path')
 const rfs = require('rotating-file-stream')
 
 if (!fs.existsSync('./config/config.json')) {
-  throw Error('General configuration (./config/config.json) doesn\'t exist.')
-}
-
-if (!fs.existsSync('./config/db.js')) {
-  throw Error('Database configuration (./config/db.js) doesn\'t exist.')
+  throw new Error('General configuration (./config/config.json) doesn\'t exist.')
 }
 
 if (!fs.existsSync('./config/secret')) {
-  throw Error('No secret key file found. Please create one in ./config/secret and chmod to 600.')
+  throw new Error('No secret key file found. Please create one in ./config/secret and chmod to 600.')
 }
 
 const {
