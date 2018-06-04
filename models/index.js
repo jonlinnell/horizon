@@ -2,9 +2,8 @@ const fs = require('fs')
 const path = require('path')
 const Sequelize = require('sequelize')
 
-const env = process.env.NODE_ENV || 'development'
+const config = Object.assign({}, require('../config/config').db, { operatorsAliases: Sequelize.Op })
 
-const config = require(path.join(__dirname, '..', 'config', 'db.js'))[env]
 
 const db = {}
 let sequelize = {}
