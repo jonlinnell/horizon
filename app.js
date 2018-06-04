@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 const bcrypt = require('bcryptjs')
 const bodyParser = require('body-parser')
+const chalk = require('chalk')
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const express = require('express')
@@ -11,8 +12,6 @@ const https = require('https')
 const morgan = require('morgan')
 const path = require('path')
 const rfs = require('rotating-file-stream')
-
-require('colors')
 
 if (!fs.existsSync('./config/config.json')) {
   throw Error('General configuration (./config/config.json) doesn\'t exist.')
@@ -54,14 +53,14 @@ app.use(helmet())
 app.use(cookieParser())
 app.use(morgan('combined', { stream: accessLog }))
 
-console.log(`Launching in ${process.env.NODE_ENV || 'development'} mode.`.cyan)
+console.log(chalk.cyan(`Launching in ${process.env.NODE_ENV || 'development'} mode.`))
 
 /* Remember to filter fixed routes in the Joi schema */
 require('./routes/auth')(app)
 require('./routes/event')(app)
 
 models.sequelize.sync().then(() => {
-  console.log(`[${'DB'.bold}] Connection established.`.green)
+  console.log(chalk.green(`[${chalk.bold('DB')}] Connection established.`))
 
   if (createDefaultAdmin) {
     User.findOne({
@@ -78,7 +77,7 @@ models.sequelize.sync().then(() => {
             administrator: true
           })
             .then(() => {
-              console.log('Default admin account doesn\'t exist. Creating it.'.yellow)
+              console.log(chalk.yellow('Default admin account doesn\'t exist. Creating it.'))
             })
         }
       })
@@ -93,10 +92,11 @@ models.sequelize.sync().then(() => {
       cert: fs.readFileSync(tls.certificate),
       key: fs.readFileSync(tls.certificate)
     }
+
     https.createServer(options, app).listen(port)
-    console.log(`[${'API'.bold}] Service (https) started on ${port}.`.green)
+    console.log(chalk.green(`[${chalk.bold('API')}] Service (https) started on ${port}.`))
   } else {
     http.createServer(app).listen(port)
-    console.log(`[${'API'.bold}] Service (http) started on ${port}.`.green)
+    console.log(chalk.green(`[${chalk.bold('API')}] Service (http) started on ${port}.`))
   }
 })
