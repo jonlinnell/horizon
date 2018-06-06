@@ -13,6 +13,6 @@ module.exports = Joi.object().keys({
   speakers: Joi.array().items(Joi.object().required().keys({
     name: Joi.string().required(),
     description: Joi.string(),
-    headline: Joi.boolean()
-  }))
+    headline: Joi.boolean(),
+  })),
 })

@@ -3,42 +3,42 @@ module.exports = (sequelize, DataTypes) => {
   const Event = sequelize.define('Event', {
     title: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
     },
     dateStart: {
       type: DataTypes.DATE,
-      allowNull: false
+      allowNull: false,
     },
     dateEnd: {
       type: DataTypes.DATE,
-      allowNull: false
+      allowNull: false,
     },
     summary: DataTypes.STRING,
     location: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
     },
     category: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
     },
     url: DataTypes.STRING,
     public: {
       type: DataTypes.BOOLEAN,
-      allowNull: false
+      allowNull: false,
     },
     ticketed: {
       type: DataTypes.BOOLEAN,
-      allowNull: false
+      allowNull: false,
     },
     speakers: {
       type: DataTypes.JSON,
-      defaultValue: []
+      defaultValue: [],
     },
     deleted: {
       type: DataTypes.BOOLEAN,
-      defaultValue: false
-    }
+      defaultValue: false,
+    },
   })
 
   return Event

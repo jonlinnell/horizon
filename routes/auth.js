@@ -23,13 +23,13 @@ module.exports = (app) => {
 
         User.create({
           username: req.body.username,
-          password: hashedPassword
+          password: hashedPassword,
         })
           .then((newUser) => {
             const token = jwt.sign(
               { id: newUser.id },
               secret,
-              { expiresIn: 86400 }
+              { expiresIn: 86400 },
             )
             res.status(200).send({ auth: true, token })
           })
@@ -39,7 +39,7 @@ module.exports = (app) => {
 
   app.get('/auth/me', verifyToken, (req, res) => {
     User.findById(req.userId, {
-      attributes: { exclude: ['password', 'createdAt', 'updatedAt'] }
+      attributes: { exclude: ['password', 'createdAt', 'updatedAt'] },
     })
       .then((user) => {
         if (!user) {
@@ -53,8 +53,8 @@ module.exports = (app) => {
   app.post('/auth/login', (req, res) => {
     User.findOne({
       where: {
-        username: req.body.username
-      }
+        username: req.body.username,
+      },
     })
       .then((user) => {
         if (!user) {

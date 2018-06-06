@@ -14,8 +14,8 @@ module.exports = (app) => {
   app.get(endpoint, (req, res) => {
     Event.findAll({
       where: {
-        deleted: false
-      }
+        deleted: false,
+      },
     })
       .then(events => res.json(events))
   })
@@ -29,7 +29,7 @@ module.exports = (app) => {
       } else {
         Event.create(Object.assign(req.body, {
           dateStart: new Date(req.body.dateStart),
-          dateEnd: new Date(req.body.dateEnd)
+          dateEnd: new Date(req.body.dateEnd),
         }))
           .then(event => res.json(event))
           .catch(dbError =>
@@ -43,8 +43,8 @@ module.exports = (app) => {
   app.get(`${endpoint}/deleted`, verifyToken, (req, res) => {
     Event.findAll({
       where: {
-        deleted: true
-      }
+        deleted: true,
+      },
     })
       .then(events => res.json(events))
   })
@@ -68,8 +68,8 @@ module.exports = (app) => {
           } else {
             event.update(req.body, {
               where: {
-                id: req.params.id
-              }
+                id: req.params.id,
+              },
             })
               .then(updatedEvent => res.json(updatedEvent))
               .catch(updateError => res.status(500).send(updateError))
@@ -84,11 +84,11 @@ module.exports = (app) => {
       .then(event =>
         Event.update({
           title: `__${event.title}_${sha256(`${event.title}${event.createdAt}`).substr(51, 6)}`,
-          deleted: true
+          deleted: true,
         }, {
           where: {
-            id: req.params.id
-          }
+            id: req.params.id,
+          },
         })
           .then(() => res.sendStatus(200))
           .catch(error => res.status(500).send(error)))

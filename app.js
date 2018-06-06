@@ -25,7 +25,7 @@ const {
   port,
   createDefaultAdmin,
   defaultAdminPassword,
-  tls
+  tls,
 } = require('./config/config.json')
 
 const models = require('./models')
@@ -40,7 +40,7 @@ if (!fs.existsSync(logDir)) {
 
 const accessLog = rfs('access.log', {
   interval: '1d',
-  path: logDir
+  path: logDir,
 })
 
 app.use(bodyParser.json())
@@ -61,7 +61,7 @@ models.sequelize.sync().then(() => {
   if (createDefaultAdmin) {
     User.findOne({
       where: { username: 'admin' },
-      attributes: { exclude: ['password'] }
+      attributes: { exclude: ['password'] },
     })
       .then((user) => {
         if (!user) {
@@ -70,7 +70,7 @@ models.sequelize.sync().then(() => {
           User.create({
             username: 'admin',
             password: hashedPassword,
-            administrator: true
+            administrator: true,
           })
             .then(() => {
               console.log(chalk.yellow('Default admin account doesn\'t exist. Creating it.'))
@@ -86,7 +86,7 @@ models.sequelize.sync().then(() => {
   if (process.env.NODE_ENV === 'production') {
     const options = {
       cert: fs.readFileSync(tls.certificate),
-      key: fs.readFileSync(tls.certificate)
+      key: fs.readFileSync(tls.certificate),
     }
 
     https.createServer(options, app).listen(port)
