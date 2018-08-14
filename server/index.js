@@ -11,6 +11,7 @@ import verifyToken from './lib/verifyToken'
 /* GraphQL Resolvers */
 import authenticate from './resolvers/authenticate'
 import me from './resolvers/me'
+import createNewUser from './resolvers/createNewUser'
 
 import {
   createDefaultAdmin,
@@ -28,6 +29,9 @@ const server = new ApolloServer({
       authenticate,
       me,
     },
+    Mutation: {
+      createNewUser,
+    },
   },
   context: ({ req }) => {
     const token = req.headers.authorization || ''
@@ -35,6 +39,12 @@ const server = new ApolloServer({
     const user = verifyToken(token)
 
     return { user }
+  },
+  playground: {
+    settings: {
+      'editor.theme': 'light',
+      'editor.fontSize': 18,
+    },
   },
 })
 

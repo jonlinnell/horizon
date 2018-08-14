@@ -5,7 +5,16 @@ type User {
   updatedAt: String,
 }
 
+input UserInput {
+  username: String!,
+  password: String!
+}
+
 type Query {
   authenticate(username: String!, password: String!): String!,
   me: User
+}
+
+type Mutation {
+  createNewUser(input: UserInput): User
 }
