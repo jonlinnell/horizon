@@ -1,24 +1,17 @@
-const fs = require('fs')
-const jwt = require('jsonwebtoken')
+import jwt from 'jsonwebtoken'
 
-const secret = fs.readFileSync('./config/secret', 'utf8').trim()
+import resolveSecret from './resolveSecret'
 
-function verifyToken(req, res, next) {
-  const token = req.headers['x-access-token']
+const verifyToken = (token) => {
+  if (!token) return null
 
-  if (!token) {
-    return res.status(403).send({ auth: false, message: 'No access token provided.' })
-  }
-
-  jwt.verify(token, secret, (err, decoded) => {
-    if (err) {
-      return res.status(403).send({ auth: false, message: 'Failed to authenticate token' })
+  return jwt.verify(token, resolveSecret(), (error, decoded) => {
+    if (error) {
+      return new Error(`Token verification error: ${error}`)
     }
 
-    req.userId = decoded.id
-
-    next()
+    return decoded.id
   })
 }
 
-module.exports = verifyToken
+export default verifyToken

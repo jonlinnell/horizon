@@ -6,25 +6,47 @@ import { ApolloServer, gql } from 'apollo-server'
 
 import models, { User } from './models'
 
+import verifyToken from './lib/verifyToken'
+
+/* GraphQL Resolvers */
+import authenticate from './resolvers/authenticate'
+import me from './resolvers/me'
+
 import {
   createDefaultAdmin,
   defaultAdminPassword,
 } from './config/config.json'
 
-if (!fs.existsSync('./config/secret')) {
-  throw new Error('No secret key file found. Please create one in ./config/secret and chmod to 600.')
+if (!fs.existsSync(`${__dirname}/config/secret`)) {
+  throw new Error('No secret key file found. Please create one in ./config/secret and chmod to 400.')
 }
 
 const server = new ApolloServer({
   typeDefs: gql`
+    type User {
+      id: Int!,
+      username: String!,
+      createdAt: String,
+      updatedAt: String,
+    }
+
     type Query {
-      hello: String!
+      authenticate(username: String!, password: String!): String!,
+      me: User
     }
   `,
   resolvers: {
     Query: {
-      hello: () => 'world!',
+      authenticate,
+      me,
     },
+  },
+  context: ({ req }) => {
+    const token = req.headers.authorization || ''
+
+    const user = verifyToken(token)
+
+    return { user }
   },
 })
 
