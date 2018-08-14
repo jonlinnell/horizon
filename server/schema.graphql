@@ -1,0 +1,11 @@
+type User {
+  id: Int!,
+  username: String!,
+  createdAt: String,
+  updatedAt: String,
+}
+
+type Query {
+  authenticate(username: String!, password: String!): String!,
+  me: User
+}
