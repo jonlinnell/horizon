@@ -22,6 +22,7 @@ import events, {
 } from './resolvers/events'
 import deleteUser from './resolvers/deleteUser'
 import deleteEvent from './resolvers/deleteEvent'
+import updateEvent from './resolvers/updateEvent'
 
 import generateFakeEventsData from './scripts/fakeData'
 
@@ -50,6 +51,7 @@ const server = new ApolloServer({
       updateUserPassword,
       deleteUser,
       deleteEvent,
+      updateEvent,
     },
     DateTime: GraphQLDateTime,
   },

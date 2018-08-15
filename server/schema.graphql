@@ -79,6 +79,7 @@ type Mutation {
   createNewUser(input: UserInput): User,
   updateUserPassword(input: UpdateUserPasswordInput): User,
   createNewEvent(input: EventInput): Event,
+  updateEvent(input: UpdateEventInput): Event,
   deleteUser(input: IdOnlyInput): Boolean,
   deleteEvent(input: IdOnlyInput): Boolean,
 }
