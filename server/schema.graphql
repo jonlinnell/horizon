@@ -38,7 +38,7 @@ input UpdateUserPasswordInput {
   newPassword: String!
 }
 
-input DeleteUserInput {
+input IdOnlyInput {
   id: ID!
 }
 
@@ -79,5 +79,6 @@ type Mutation {
   createNewUser(input: UserInput): User,
   updateUserPassword(input: UpdateUserPasswordInput): User,
   createNewEvent(input: EventInput): Event,
-  deleteUser(input: DeleteUserInput): Boolean,
+  deleteUser(input: IdOnlyInput): Boolean,
+  deleteEvent(input: IdOnlyInput): Boolean,
 }
