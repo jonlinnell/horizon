@@ -36,6 +36,7 @@ input UserInput {
 type Query {
   authenticate(username: String!, password: String!): String!,
   events: [Event],
+  eventById(id: ID!): Event,
   me: User
 }
 
