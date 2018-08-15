@@ -15,7 +15,10 @@ import verifyToken from './lib/verifyToken'
 import authenticate from './resolvers/authenticate'
 import me from './resolvers/me'
 import createNewUser from './resolvers/createNewUser'
-import events, { eventById } from './resolvers/events'
+import events, {
+  eventById,
+  createNewEvent,
+} from './resolvers/events'
 
 import generateFakeEventsData from './scripts/fakeData'
 
@@ -39,6 +42,7 @@ const server = new ApolloServer({
     },
     Mutation: {
       createNewUser,
+      createNewEvent,
     },
     DateTime: GraphQLDateTime,
   },

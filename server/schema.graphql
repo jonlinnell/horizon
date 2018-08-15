@@ -33,6 +33,18 @@ input UserInput {
   roles: [Role]!
 }
 
+input EventInput {
+  title: String!,
+  dateStart: DateTime!,
+  dateEnd: DateTime!,
+  summary: String,
+  location: String,
+  url: [String],
+  public: Boolean!,
+  ticketed: Boolean!,
+  speakers: [String]
+}
+
 type Query {
   authenticate(username: String!, password: String!): String!,
   events: [Event],
@@ -42,4 +54,5 @@ type Query {
 
 type Mutation {
   createNewUser(input: UserInput): User
+  createNewEvent(input: EventInput): Event
 }
