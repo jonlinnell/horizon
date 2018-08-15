@@ -3,6 +3,9 @@ import bcrypt from 'bcryptjs'
 import chalk from 'chalk'
 import fs from 'fs'
 import { ApolloServer, gql } from 'apollo-server'
+import {
+  GraphQLDateTime,
+} from 'graphql-iso-date'
 
 import models, { User } from './models'
 
@@ -12,6 +15,12 @@ import verifyToken from './lib/verifyToken'
 import authenticate from './resolvers/authenticate'
 import me from './resolvers/me'
 import createNewUser from './resolvers/createNewUser'
+import events, {
+  eventById,
+  createNewEvent,
+} from './resolvers/events'
+
+import generateFakeEventsData from './scripts/fakeData'
 
 import {
   createDefaultAdmin,
@@ -23,15 +32,19 @@ if (!fs.existsSync(`${__dirname}/config/secret`)) {
 }
 
 const server = new ApolloServer({
-  typeDefs: gql(fs.readFileSync(`${__dirname}/schema.graphql`, 'utf-8')),
+  typeDefs: gql(fs.readFileSync(`${__dirname}/schema.graphql`, 'utf8')),
   resolvers: {
     Query: {
       authenticate,
+      events,
+      eventById,
       me,
     },
     Mutation: {
       createNewUser,
+      createNewEvent,
     },
+    DateTime: GraphQLDateTime,
   },
   context: ({ req }) => {
     const token = req.headers.authorization || ''
@@ -53,7 +66,7 @@ server.listen()
     console.log(`Server up on ${url} in ${process.env.NODE_ENV || 'development'} mode.`)
   })
 
-models.sequelize.sync().then(() => {
+models.sequelize.sync({ force: true }).then(() => {
   console.log(chalk.green(`[${chalk.bold('DB')}] Connection established.`))
 
   if (createDefaultAdmin) {
@@ -68,7 +81,7 @@ models.sequelize.sync().then(() => {
           User.create({
             username: 'admin',
             password: hashedPassword,
-            administrator: true,
+            roles: ['ADMIN'],
           })
             .then(() => {
               console.log(chalk.yellow('Default admin account doesn\'t exist. Creating it.'))
@@ -76,4 +89,6 @@ models.sequelize.sync().then(() => {
         }
       })
   }
+
+  generateFakeEventsData()
 })

@@ -1,20 +1,58 @@
+scalar DateTime
+
+enum Role {
+  USER,
+  EDITOR,
+  ADMIN
+}
+
 type User {
-  id: Int!,
-  username: String!,
+  id: ID,
+  username: String,
   createdAt: String,
   updatedAt: String,
+  roles: [Role],
+}
+
+type Event {
+  id: ID,
+  title: String,
+  dateStart: DateTime,
+  dateEnd: DateTime,
+  summary: String,
+  location: String,
+  url: [String],
+  public: Boolean,
+  ticketed: Boolean,
+  speakers: [String]
 }
 
 input UserInput {
   username: String!,
-  password: String!
+  password: String!,
+  roles: [Role]!
+}
+
+input EventInput {
+  title: String!,
+  dateStart: DateTime!,
+  dateEnd: DateTime!,
+  summary: String,
+  location: String,
+  url: [String],
+  public: Boolean!,
+  ticketed: Boolean!,
+  speakers: [String]
 }
 
 type Query {
   authenticate(username: String!, password: String!): String!,
+  events: [Event],
+  eventById(id: ID!): Event,
   me: User
 }
 
 type Mutation {
   createNewUser(input: UserInput): User
+  createNewEvent(input: EventInput): Event
 }

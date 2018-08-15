@@ -17,7 +17,10 @@ const authenticate = (root, { username, password }) =>
         }
 
         if (bcrypt.compareSync(password, user.password)) {
-          jwt.sign({ id: user.id }, secret, { expiresIn: 86400 }, (error, token) => {
+          jwt.sign({
+            id: user.id,
+            roles: user.roles,
+          }, secret, { expiresIn: 86400 }, (error, token) => {
             resolve(token)
           })
         } else {
