@@ -29,7 +29,7 @@ if (!fs.existsSync(`${__dirname}/config/secret`)) {
 }
 
 const server = new ApolloServer({
-  typeDefs: gql(fs.readFileSync(`${__dirname}/schema.graphql`, 'utf-8')),
+  typeDefs: gql(fs.readFileSync(`${__dirname}/schema.graphql`, 'utf8')),
   resolvers: {
     Query: {
       authenticate,
