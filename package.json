@@ -14,9 +14,12 @@
     "apollo-server": "^2.0.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
+    "casual": "^1.5.19",
     "chalk": "^2.4.1",
     "graphql": "^0.13.2",
+    "graphql-iso-date": "^3.5.0",
     "jsonwebtoken": "^8.1.0",
+    "lodash": "^4.17.10",
     "mysql2": "^1.6.1",
     "sequelize": "^4.38.0"
   },

@@ -3,6 +3,9 @@ import bcrypt from 'bcryptjs'
 import chalk from 'chalk'
 import fs from 'fs'
 import { ApolloServer, gql } from 'apollo-server'
+import {
+  GraphQLDateTime,
+} from 'graphql-iso-date'
 
 import models, { User } from './models'
 
@@ -12,6 +15,9 @@ import verifyToken from './lib/verifyToken'
 import authenticate from './resolvers/authenticate'
 import me from './resolvers/me'
 import createNewUser from './resolvers/createNewUser'
+import events from './resolvers/events'
+
+import generateFakeEventsData from './scripts/fakeData'
 
 import {
   createDefaultAdmin,
@@ -27,11 +33,13 @@ const server = new ApolloServer({
   resolvers: {
     Query: {
       authenticate,
+      events,
       me,
     },
     Mutation: {
       createNewUser,
     },
+    DateTime: GraphQLDateTime,
   },
   context: ({ req }) => {
     const token = req.headers.authorization || ''
@@ -53,7 +61,7 @@ server.listen()
     console.log(`Server up on ${url} in ${process.env.NODE_ENV || 'development'} mode.`)
   })
 
-models.sequelize.sync().then(() => {
+models.sequelize.sync({ force: true }).then(() => {
   console.log(chalk.green(`[${chalk.bold('DB')}] Connection established.`))
 
   if (createDefaultAdmin) {
@@ -76,4 +84,6 @@ models.sequelize.sync().then(() => {
         }
       })
   }
+
+  generateFakeEventsData()
 })

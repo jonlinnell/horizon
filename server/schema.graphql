@@ -1,15 +1,30 @@
+scalar DateTime
+
+enum Role {
+  USER,
+  EDITOR,
+  ADMIN
+}
+
 type User {
-  id: Int!,
+  id: ID,
   username: String,
   createdAt: String,
   updatedAt: String,
   roles: [Role],
 }
 
-enum Role {
-  USER,
-  EDITOR,
-  ADMIN
+type Event {
+  id: ID,
+  title: String,
+  dateStart: DateTime,
+  dateEnd: DateTime,
+  summary: String,
+  location: String,
+  url: [String],
+  public: Boolean,
+  ticketed: Boolean,
+  speakers: [String]
 }
 
 input UserInput {
@@ -20,6 +35,7 @@ input UserInput {
 
 type Query {
   authenticate(username: String!, password: String!): String!,
+  events: [Event],
   me: User
 }
 
