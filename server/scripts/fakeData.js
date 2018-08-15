@@ -4,8 +4,8 @@ import crypto from 'crypto'
 
 import { Event } from '../models'
 
-const fakeEventsData = () =>
-  _.times(4, () => Event.create({
+const fakeEventsData = entries =>
+  _.times(entries, () => Event.create({
     id: crypto.randomBytes(8).toString('hex'),
     title: casual.title,
     dateStart: casual.unix_time,

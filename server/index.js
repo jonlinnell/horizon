@@ -25,6 +25,7 @@ import generateFakeEventsData from './scripts/fakeData'
 import {
   createDefaultAdmin,
   defaultAdminPassword,
+  populateWithTestData,
 } from './config/config.json'
 
 if (!fs.existsSync(`${__dirname}/config/secret`)) {
@@ -66,7 +67,7 @@ server.listen()
     console.log(`Server up on ${url} in ${process.env.NODE_ENV || 'development'} mode.`)
   })
 
-models.sequelize.sync({ force: true }).then(() => {
+models.sequelize.sync().then(() => {
   console.log(chalk.green(`[${chalk.bold('DB')}] Connection established.`))
 
   if (createDefaultAdmin) {
@@ -90,5 +91,7 @@ models.sequelize.sync({ force: true }).then(() => {
       })
   }
 
-  generateFakeEventsData()
+  if (populateWithTestData) {
+    generateFakeEventsData(10)
+  }
 })
