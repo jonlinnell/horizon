@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
       unique: true,
     },
     password: DataTypes.STRING,
-    administrator: DataTypes.BOOLEAN,
+    roles: DataTypes.JSON,
   })
 
   return User
