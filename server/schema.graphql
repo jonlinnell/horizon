@@ -1,0 +1,20 @@
+type User {
+  id: Int!,
+  username: String!,
+  createdAt: String,
+  updatedAt: String,
+}
+
+input UserInput {
+  username: String!,
+  password: String!
+}
+
+type Query {
+  authenticate(username: String!, password: String!): String!,
+  me: User
+}
+
+type Mutation {
+  createNewUser(input: UserInput): User
+}

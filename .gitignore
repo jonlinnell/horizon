@@ -67,3 +67,5 @@ db.dev.sqlite
 
 # Media files
 media/
+
+.vscode/
