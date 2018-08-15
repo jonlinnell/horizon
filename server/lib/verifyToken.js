@@ -10,7 +10,7 @@ const verifyToken = (token) => {
       return new Error(`Token verification error: ${error}`)
     }
 
-    return decoded.id
+    return decoded
   })
 }
 

@@ -33,6 +33,29 @@ input UserInput {
   roles: [Role]!
 }
 
+input UpdateUserPasswordInput {
+  id: ID!,
+  newPassword: String!
+}
+
+input DeleteUserInput {
+  id: ID!
+}
+
+input UpdateEventInput {
+  # Need to look at this re: validation of required fields
+  id: ID!,
+  title: String,
+  dateStart: DateTime,
+  dateEnd: DateTime,
+  summary: String,
+  location: String,
+  url: [String],
+  public: Boolean,
+  ticketed: Boolean,
+  speakers: [String]
+}
+
 input EventInput {
   title: String!,
   dateStart: DateTime!,
@@ -53,6 +76,8 @@ type Query {
 }
 
 type Mutation {
-  createNewUser(input: UserInput): User
-  createNewEvent(input: EventInput): Event
+  createNewUser(input: UserInput): User,
+  updateUserPassword(input: UpdateUserPasswordInput): User,
+  createNewEvent(input: EventInput): Event,
+  deleteUser(input: DeleteUserInput): Boolean,
 }
