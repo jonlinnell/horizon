@@ -29,4 +29,3 @@ export const createNewEvent = (root, { input }, context) => (
 )
 
 export default events
-

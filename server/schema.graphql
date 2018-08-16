@@ -21,7 +21,7 @@ type Event {
   dateEnd: DateTime,
   summary: String,
   location: String,
-  url: [String],
+  url: String,
   public: Boolean,
   ticketed: Boolean,
   speakers: [String]

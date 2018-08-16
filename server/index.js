@@ -3,6 +3,8 @@ import bcrypt from 'bcryptjs'
 import chalk from 'chalk'
 import fs from 'fs'
 import { ApolloServer, gql } from 'apollo-server'
+import express from 'express'
+import helmet from 'helmet'
 import {
   GraphQLDateTime,
 } from 'graphql-iso-date'
@@ -10,6 +12,8 @@ import {
 import models, { User } from './models'
 
 import verifyToken from './lib/verifyToken'
+
+import registerIcalRoute from './routes/ical'
 
 /* GraphQL Resolvers */
 import authenticate from './resolvers/authenticate'
@@ -36,22 +40,25 @@ if (!fs.existsSync(`${__dirname}/config/secret`)) {
   throw new Error('No secret key file found. Please create one in ./config/secret and chmod to 400.')
 }
 
+const app = express()
+const httpPort = 4001
+
 const server = new ApolloServer({
   typeDefs: gql(fs.readFileSync(`${__dirname}/schema.graphql`, 'utf8')),
   resolvers: {
     Query: {
       authenticate,
-      events,
       eventById,
+      events,
       me,
     },
     Mutation: {
-      createNewUser,
       createNewEvent,
-      updateUserPassword,
-      deleteUser,
+      createNewUser,
       deleteEvent,
+      deleteUser,
       updateEvent,
+      updateUserPassword,
     },
     DateTime: GraphQLDateTime,
   },
@@ -103,3 +110,9 @@ models.sequelize.sync().then(() => {
     generateFakeEventsData(10)
   }
 })
+
+app.use(helmet())
+
+registerIcalRoute(app)
+
+app.listen(httpPort, () => console.log(`HTTP server up on ${httpPort}`))
