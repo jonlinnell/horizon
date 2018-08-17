@@ -1,5 +1,6 @@
 export const allEvents = () => `{
   events {
+    id,
     title,
     dateStart,
     dateEnd,
