@@ -3,7 +3,7 @@ import { get } from 'lodash'
 
 import { calendar } from '../config/config.json'
 
-import request, { allEvents } from '../lib/api'
+import request, { allEvents } from '../../lib/api'
 
 const cal = ical(calendar)
 
