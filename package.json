@@ -10,7 +10,7 @@
     "lint": "yarn server:lint & yarn client:lint",
     "precommit": "yarn test",
     "server:lint": "eslint -c src/server/.eslintrc src/server/",
-    "server:start": "nodemon -w src/server/ --exec babel-node src/server/index.js",
+    "server:start": "nodemon -w src/server/ -w src/lib/ --exec babel-node src/server/index.js",
     "test": "yarn lint"
   },
   "author": "Jon Linnell",
