@@ -1,3 +1,4 @@
+/* eslint-disable implicit-arrow-linebreak */
 import bcrypt from 'bcryptjs'
 
 import { User } from '../models'
@@ -10,12 +11,11 @@ const register = (roots, { input: { username, password } }, context) =>
       username,
       password: bcrypt.hashSync(password, 8),
     })
-      .then(newUser =>
-        resolve({
-          id: newUser.id,
-          username: newUser.username,
-          createdAt: newUser.createdAt,
-        }))
+      .then(newUser => resolve({
+        id: newUser.id,
+        username: newUser.username,
+        createdAt: newUser.createdAt,
+      }))
       .catch(error => reject(error))
   })
 

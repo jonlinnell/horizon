@@ -7,7 +7,7 @@
     "client:build": "webpack --mode production --progress --config src/client/webpack.prod.js src/client/src/",
     "client:lint": "eslint -c src/client/.eslintrc --ext .jsx --ext .js src/client/src/",
     "client:start": "webpack-dev-server --mode development --progress --hot --config src/client/webpack.dev.js src/client/src/",
-    "lint": "yarn server:lint client:lint",
+    "lint": "yarn server:lint & yarn client:lint",
     "precommit": "yarn test",
     "server:lint": "eslint -c src/server/.eslintrc src/server/",
     "server:start": "nodemon --exec babel-node src/server/index.js",
