@@ -5,4 +5,8 @@ const path = require('path')
 module.exports = merge(common, {
   devtool: 'inline-source-map',
   mode: 'development',
+  devServer: {
+    publicPath: '/',
+    historyApiFallback: true,
+  },
 })
