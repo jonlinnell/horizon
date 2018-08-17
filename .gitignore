@@ -59,8 +59,8 @@ config.json
 db.js
 secret
 
-# Test database
-db.dev.sqlite
+# Client build
+src/client/dist
 
 # macOS debris
 .DS_Store
@@ -68,4 +68,5 @@ db.dev.sqlite
 # Media files
 media/
 
+# VS Code
 .vscode/
