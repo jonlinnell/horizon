@@ -4,13 +4,13 @@
   "description": "A calendar for events.",
   "main": "server/index.js",
   "scripts": {
-    "client:build": "webpack --mode production --progress --config src/client/webpack.prod.js src/client/src/",
-    "client:lint": "eslint -c src/client/.eslintrc --ext .jsx --ext .js src/client/src/",
-    "client:start": "webpack-dev-server --mode development --progress --hot --config src/client/webpack.dev.js src/client/src/",
+    "client:build": "webpack --mode production --progress --config client/webpack.prod.js client/src/",
+    "client:lint": "eslint -c client/.eslintrc --ext .jsx --ext .js client/src/",
+    "client:start": "webpack-dev-server --mode development --progress --hot --config client/webpack.dev.js client/src/",
     "lint": "yarn server:lint & yarn client:lint",
     "precommit": "yarn test",
-    "server:lint": "eslint -c src/server/.eslintrc src/server/",
-    "server:start": "nodemon -w src/server/ -w src/lib/ --exec babel-node src/server/index.js",
+    "server:lint": "eslint -c server/.eslintrc server/",
+    "server:start": "nodemon -w server/ -w lib/ --exec babel-node server/index.js",
     "test": "yarn lint"
   },
   "author": "Jon Linnell",
