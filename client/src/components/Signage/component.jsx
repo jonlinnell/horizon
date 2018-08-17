@@ -1,36 +1,26 @@
 import React from 'react'
-import styled from 'styled-components'
-import moment from 'moment'
+import styled, { ThemeProvider } from 'styled-components'
 
-const formatDate = date => moment(date).format('dddd, MMMM Do YYYY, h:mm:ss a')
+import SignageEvent from '../SignageEvent'
 
-const Title = styled.h1`
-  font-size: 1.5rem;
-  color: rgb(100, 90, 190);
-`
+import theme from '../../theme.json'
 
-const Summary = styled.p`
-  color: rgb(230, 230, 230);
-  margin-left: 1rem;
-`
-
-const Date = styled.p`
-  font-weight: bold;
+const Signage = styled.div`
+  font-family: '${props => props.theme.typeface.primary || 'Times New Roman'}';
 `
 
 const Component = ({ events }) => (
-  <div>
-    {
-      events.map(event => (
-        <div>
-          <Title>{event.title}</Title>
-          <Summary>{event.summary}</Summary>
-          <Date>{formatDate(event.dateStart)}</Date>
-          <Date>{formatDate(event.dateEnd)}</Date>
-        </div>
-      ))
-    }
-  </div>
+  <ThemeProvider theme={theme}>
+    <Signage>
+      {
+        events.map(event => (
+          <div key={event.id}>
+            <SignageEvent event={event} key={event.id} />
+          </div>
+        ))
+      }
+    </Signage>
+  </ThemeProvider>
 )
 
 export default Component

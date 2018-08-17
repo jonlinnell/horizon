@@ -1,0 +1,9 @@
+{
+  "colours": {
+    "main": "rgb(54, 17, 99)",
+    "bgPrimary": "rgb(183, 0, 98)"
+  },
+  "typeface": {
+    "primary": "Verdana"
+  }
+}
