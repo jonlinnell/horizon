@@ -1,6 +1,6 @@
 import { User } from '../models'
 
-const me = (root, args, context) => User.findById(context.user, {
+const me = (root, args, context) => User.findById(context.user.id, {
   attributes: { exclude: ['password', 'createdAt', 'updatedAt'] },
 })
   .then() // return the result
