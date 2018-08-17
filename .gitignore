@@ -60,7 +60,7 @@ db.js
 secret
 
 # Client build
-src/client/dist
+client/dist
 
 # macOS debris
 .DS_Store
