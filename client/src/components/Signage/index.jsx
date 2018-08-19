@@ -36,10 +36,6 @@ const Signage = styled.div`
     grid-template-columns: repeat(2, 1fr);
     width: ${boxWidth * 2}px;
   }
-
-  @media only screen and (max-width: ${boxWidth * 2}px) {
-
-  }
 `
 
 const Component = () => (
