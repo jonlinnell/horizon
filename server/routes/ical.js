@@ -7,9 +7,10 @@ import request, { allEvents } from '../../lib/api'
 
 const cal = ical(calendar)
 
-const registerIcalRoute = app => app.get('/events.ics', (req, res) => request(allEvents)
+const registerIcalRoute = app => app.get('/events.ics', (req, res) => request(allEvents, { futureOnly: false })
   .then((data) => {
     cal.events(get(data, 'data.events', []).map(event => ({
+      uid: event.id,
       summary: event.title,
       start: event.dateStart,
       end: event.dateEnd,
