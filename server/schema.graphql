@@ -55,7 +55,7 @@ input UpdateEventInput {
   dateEnd: DateTime,
   summary: String,
   location: String,
-  url: [String],
+  url: String,
   public: Boolean,
   ticketed: Boolean,
   speakers: [String]
@@ -67,7 +67,7 @@ input EventInput {
   dateEnd: DateTime!,
   summary: String,
   location: String,
-  url: [String],
+  url: String,
   public: Boolean!,
   ticketed: Boolean!,
   speakers: [String]
