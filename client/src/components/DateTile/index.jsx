@@ -13,6 +13,7 @@ const Tile = styled.div`
   left: 0;
   text-align: center;
   line-height: 1;
+  transition: background-color 0.25s;
 `
 
 const Day = styled.span`

@@ -53,6 +53,9 @@ const Speakers = styled.p`
 `
 
 const ImageHeader = styled.div`
+  background: url(${props => props.imageUrl});
+  position: relative;
+
   @media only screen and (min-width: 492px) {
     width: 480px;
     height: 270px;
@@ -65,8 +68,9 @@ const ImageHeader = styled.div`
     overflow: hidden;
   }
 
-  position: relative;
-  background-image: url(${props => props.imageUrl});
+  &:hover > div {
+    background-color: ${props => props.theme.colours.secondary};
+  }
 `
 
 const Details = styled.div`
@@ -85,15 +89,18 @@ const SignageEvent = ({
     dateStart,
     dateEnd,
     summary,
+    url,
     location,
     ticketed,
     speakers,
   },
 }) => (
   <StyledSignageEvent>
-    <ImageHeader imageUrl="https://picsum.photos/480/270/?random">
-      <DateTile date={dateStart} />
-    </ImageHeader>
+    <a href={url}>
+      <ImageHeader imageUrl="https://picsum.photos/480/270/?random">
+        <DateTile date={dateStart} />
+      </ImageHeader>
+    </a>
     <Details>
       <Title>{title}</Title>
       <Summary>{summary}</Summary>
