@@ -74,9 +74,19 @@ input EventInput {
 }
 
 type Query {
-  authenticate(username: String!, password: String!): String!,
-  events(sort: String, order: Order): [Event],
+  authenticate(
+    username: String!,
+    password: String!
+  ): String!,
+
+  events(
+    sort: String,
+    order: Order,
+    futureOnly: Boolean
+  ): [Event],
+
   eventById(id: ID!): Event,
+  
   me: User
 }
 

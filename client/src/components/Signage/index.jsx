@@ -44,6 +44,7 @@ const Component = () => (
     <Signage>
       <Query
         query={allEvents}
+        // variables={{ futureOnly: true }}
         pollInterval={15000}
       >
         {
