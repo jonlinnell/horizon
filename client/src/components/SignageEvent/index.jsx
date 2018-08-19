@@ -2,6 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 import moment from 'moment'
 
+import iconLocation from '../../assets/images/location_pin_map.png'
+import iconTime from '../../assets/images/time_clock_watch.png'
+
 import DateTile from '../DateTile'
 
 const StyledSignageEvent = styled.div`
@@ -22,8 +25,13 @@ const Title = styled.h1`
   color: ${props => props.theme.colours.primary};
 `
 
-const Info = styled.p`
+const InfoWithIcon = styled.div`
+  display: flex;
+  align-items: center;
   margin: 6px 0;
+`
+
+const Info = styled.span`
   font-size: 0.9rem;
   color: ${props => props.theme.colours.secondary};
 `
@@ -66,6 +74,11 @@ const Details = styled.div`
   background-color: ${props => props.theme.colours.bgLight};
 `
 
+const Icon = styled.img`
+  height: 1rem;
+  margin-right: 6px;
+`
+
 const SignageEvent = ({
   event: {
     title,
@@ -84,23 +97,34 @@ const SignageEvent = ({
     <Details>
       <Title>{title}</Title>
       <Summary>{summary}</Summary>
-      <Info>{location}</Info>
+      <InfoWithIcon>
+        <Icon src={iconLocation} />
+        <Info>
+          {location}
+        </Info>
+      </InfoWithIcon>
       {
         // if single day, show times; if multiday, show date and time
         moment(dateStart).isSame(dateEnd, 'day')
           ? (
-            <Info>
-              {moment(dateStart).format('h:mm a')}
-              &nbsp;—&nbsp;
-              {moment(dateEnd).format('h:mm a')}
-            </Info>
+            <InfoWithIcon>
+              <Icon src={iconTime} />
+              <Info>
+                {moment(dateStart).format('h:mm a')}
+                &nbsp;—&nbsp;
+                {moment(dateEnd).format('h:mm a')}
+              </Info>
+            </InfoWithIcon>
           )
           : (
-            <Info>
-              {moment(dateStart).format('D MMM YYYY, h:mm a')}
-              &nbsp;—&nbsp;
-              {moment(dateEnd).format('D MMM YYYY, h:mm a')}
-            </Info>
+            <InfoWithIcon>
+              <Icon src={iconTime} />
+              <Info>
+                {moment(dateStart).format('D MMM YYYY, h:mm a')}
+                &nbsp;—&nbsp;
+                {moment(dateEnd).format('D MMM YYYY, h:mm a')}
+              </Info>
+            </InfoWithIcon>
           )
       }
       {
