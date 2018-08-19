@@ -22,6 +22,16 @@ const Temp = () => (
 
 /* eslint-disable-next-line no-unused-expressions */
 injectGlobal`
+  @import url('https://fonts.googleapis.com/css?family=Dosis');
+
+  html {
+    box-sizing: border-box;
+  }
+
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+
   body {
     margin: 0;
     padding: 0;

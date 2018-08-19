@@ -1,39 +1,80 @@
 import React from 'react'
 import styled from 'styled-components'
-import moment from 'moment'
 
-const formatDate = date => moment(date).format('dddd, MMMM Do YYYY, h:mm:ss a')
+import DateTile from '../DateTile'
+
+const StyledSignageEvent = styled.div`
+
+  @media only screen and (min-width: 492px) {
+    width: 480px;
+    margin: 6px;
+  }
+
+  margin-bottom: 12px;
+`
 
 const Title = styled.h1`
   font-size: 1.5rem;
-  color: ${props => props.theme.colours.main};
+  font-weight: 300;
+  text-transform: capitalize;
+  color: ${props => props.theme.colours.primary};
 `
 
 const Summary = styled.p`
-  color: rgb(230, 230, 230);
-  margin-left: 1rem;
+  color: ${props => props.theme.colours.textSecondary};
 `
 
-const Date = styled.p`
-  font-weight: bold;
-`
-
-const Speaker = styled.p`
+const Speakers = styled.p`
   color: rgb(200, 70, 170);
 `
 
-const SignageEvent = ({ event }) => (
-  <div>
-    <Title>{event.title}</Title>
-    <Summary>{event.summary}</Summary>
-    <Date>{formatDate(event.dateStart)}</Date>
-    <Date>{formatDate(event.dateEnd)}</Date>
-    {
-      event.speakers.map(speaker => (
-        <Speaker key={speaker}>{speaker}</Speaker>
-      ))
-    }
-  </div>
+const ImageHeader = styled.div`
+  @media only screen and (min-width: 492px) {
+    width: 480px;
+    height: 270px;
+  }
+
+  @media only screen and (max-width: 492px) {
+    max-width: 100%;
+    height: 54.879vw;
+    background-size: cover;
+    overflow: hidden;
+  }
+
+  position: relative;
+  background-image: url(${props => props.imageUrl});
+`
+
+const Details = styled.div`
+  padding: 12px;
+  background-color: ${props => props.theme.colours.bgLight};
+`
+
+const SignageEvent = ({
+  event: {
+    title,
+    summary,
+    speakers,
+    dateStart,
+  },
+}) => (
+  <StyledSignageEvent>
+    <ImageHeader imageUrl="https://via.placeholder.com/480x270">
+      <DateTile date={dateStart} />
+    </ImageHeader>
+    <Details>
+      <Title>{title}</Title>
+      <Summary>{summary}</Summary>
+      <Speakers>
+        Speaker
+        { speakers.length > 1 ? 's' : '' }
+        :&nbsp;
+        {
+          speakers.join(', ')
+        }
+      </Speakers>
+    </Details>
+  </StyledSignageEvent>
 )
 
 export default SignageEvent
