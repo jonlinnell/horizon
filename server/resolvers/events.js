@@ -2,11 +2,14 @@ import { randomBytes } from 'crypto'
 
 import { Event } from '../models'
 
-const events = () => (
+const events = (root, args) => (
   Event.findAll({
     where: {
       deleted: false,
     },
+    order: [
+      [args.sort || 'dateStart', args.order || 'ASC'],
+    ],
   })
     .then() // return the result
     .catch(error => new Error(`Error retrieving events: ${error}`))

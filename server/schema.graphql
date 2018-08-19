@@ -6,6 +6,11 @@ enum Role {
   ADMIN
 }
 
+enum Order {
+  ASC,
+  DESC
+}
+
 type User {
   id: ID,
   username: String,
@@ -70,7 +75,7 @@ input EventInput {
 
 type Query {
   authenticate(username: String!, password: String!): String!,
-  events: [Event],
+  events(sort: String, order: Order): [Event],
   eventById(id: ID!): Event,
   me: User
 }
