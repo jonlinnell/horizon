@@ -1,0 +1,14 @@
+{
+  "colours": {
+    "primary": "rgb(54, 17, 99)",
+    "secondary": "rgb(183, 0, 98)",
+    "textSecondary": "rgb(82, 94, 102)",
+    "bgPrimary": "rgb(183, 0, 98)",
+    "bgLight": "rgb(243, 246, 246)",
+    "contrast": "rgb(240, 240, 240)"
+  },
+  "fonts": {
+    "primary": "Helvetica Neue",
+    "infoTile": "Dosis"
+  }
+}

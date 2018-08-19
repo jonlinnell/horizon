@@ -1,4 +1,7 @@
-/* eslint-disable no-unused-vars */
+import { validation } from '../config/config.json'
+
+const { titleLength, summaryLength } = validation
+
 module.exports = (sequelize, DataTypes) => {
   const Event = sequelize.define('Event', {
     id: {
@@ -8,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
     },
     title: {
-      type: DataTypes.STRING,
+      type: DataTypes.STRING(Number(titleLength)),
       allowNull: false,
     },
     dateStart: {
@@ -19,12 +22,17 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       allowNull: false,
     },
-    summary: DataTypes.STRING,
+    summary: DataTypes.STRING(Number(summaryLength)),
     location: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    url: DataTypes.STRING,
+    url: {
+      type: DataTypes.STRING,
+      validate: {
+        isUrl: true,
+      },
+    },
     public: {
       type: DataTypes.BOOLEAN,
       allowNull: false,

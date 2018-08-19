@@ -6,6 +6,11 @@ enum Role {
   ADMIN
 }
 
+enum Order {
+  ASC,
+  DESC
+}
+
 type User {
   id: ID,
   username: String,
@@ -50,7 +55,7 @@ input UpdateEventInput {
   dateEnd: DateTime,
   summary: String,
   location: String,
-  url: [String],
+  url: String,
   public: Boolean,
   ticketed: Boolean,
   speakers: [String]
@@ -62,16 +67,26 @@ input EventInput {
   dateEnd: DateTime!,
   summary: String,
   location: String,
-  url: [String],
+  url: String,
   public: Boolean!,
   ticketed: Boolean!,
   speakers: [String]
 }
 
 type Query {
-  authenticate(username: String!, password: String!): String!,
-  events: [Event],
+  authenticate(
+    username: String!,
+    password: String!
+  ): String!,
+
+  events(
+    sort: String,
+    order: Order,
+    futureOnly: Boolean
+  ): [Event],
+
   eventById(id: ID!): Event,
+  
   me: User
 }
 
