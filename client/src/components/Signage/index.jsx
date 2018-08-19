@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Query } from 'react-apollo'
-import gql from 'graphql-tag'
 
 import { allEvents } from '../../../../lib/api'
 
@@ -14,7 +13,7 @@ const Signage = styled.div`
 const Component = () => (
   <Signage>
     <Query
-      query={gql`${allEvents()}`}
+      query={allEvents}
       pollInterval={1000}
     >
       {
