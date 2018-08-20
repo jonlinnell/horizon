@@ -35,6 +35,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     public: {
       type: DataTypes.BOOLEAN,
+      defaultValue: false,
       allowNull: false,
     },
     ticketed: {
@@ -44,6 +45,16 @@ module.exports = (sequelize, DataTypes) => {
     speakers: {
       type: DataTypes.JSON,
       defaultValue: [],
+    },
+    displayOnSignage: {
+      type: DataTypes.BOOLEAN,
+      default: true,
+      allowNull: false,
+    },
+    includeInCalendar: {
+      type: DataTypes.BOOLEAN,
+      default: true,
+      allowNull: false,
     },
     deleted: {
       type: DataTypes.BOOLEAN,

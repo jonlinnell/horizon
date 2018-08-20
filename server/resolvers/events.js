@@ -5,7 +5,6 @@ import { Op } from 'sequelize'
 
 import { Event } from '../models'
 
-
 const events = (root, args) => (
   Event.findAll({
     where: {
@@ -13,6 +12,8 @@ const events = (root, args) => (
       dateEnd: {
         [Op.gte]: args.futureOnly ? moment().subtract(1, 'days').toDate() : moment(0).toDate(),
       },
+      displayOnSignage: args.displayOnSignage ? true : { [Op.not]: null },
+      includeInCalendar: args.includeInCalendar ? true : { [Op.not]: null },
     },
     order: [
       [args.sort || 'dateStart', args.order || 'ASC'],

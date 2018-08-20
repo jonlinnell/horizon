@@ -44,7 +44,10 @@ const Component = () => (
     <Signage>
       <Query
         query={allEvents}
-        // variables={{ futureOnly: true }}
+        variables={{
+          futureOnly: process.env.NODE_ENV === 'production', // switch to true in prod
+          displayOnSignage: true,
+        }}
         pollInterval={15000}
       >
         {
