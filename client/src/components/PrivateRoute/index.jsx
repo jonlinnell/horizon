@@ -6,7 +6,7 @@ import FullPageError from '../FullPageError'
 
 import { ME } from '../../../../lib/queries'
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
+const PrivateRoute = ({ component: Component, page, ...rest }) => (
   <Route
     {...rest}
     render={props => (
@@ -15,7 +15,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
           if (error) { return <FullPageError error={error} /> }
 
           if (data.me !== null) {
-            return <Component {...props} />
+            return <Component page={page} {...props} />
           }
 
           return <Redirect to={{ pathname: '/login' }} />

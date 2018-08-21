@@ -18,16 +18,17 @@ import history from './history'
 import PrivateRoute from './components/PrivateRoute'
 import LoginBox from './components/LoginBox'
 import Signage from './components/Signage'
-
-const Temp = () => (
-  <div>
-    <p>test</p>
-  </div>
-)
+import ViewMain from './components/ViewMain'
 
 const PrivateThing = () => (
   <div>
     <p>If you can see this, you&apos;re logged in.</p>
+  </div>
+)
+
+const Temp = () => (
+  <div>
+    tester!
   </div>
 )
 
@@ -55,10 +56,10 @@ const App = () => (
     <ThemeProvider theme={theme}>
       <Router history={history}>
         <div>
-          <Route exact path="/" component={Temp} />
+          <PrivateRoute exact path="/temp" component={ViewMain} page={Temp} />
+          <PrivateRoute exact path="/priv" component={ViewMain} page={PrivateThing} />
           <Route exact path="/signage" component={Signage} />
           <Route exact path="/login" component={LoginBox} />
-          <PrivateRoute exact path="/test" component={PrivateThing} />
         </div>
       </Router>
     </ThemeProvider>
