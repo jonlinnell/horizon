@@ -20,22 +20,21 @@ module.exports = {
         }
       },
       {
-        test: /\.css$/,
-        include: [
-          basePath
-        ],
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader'
-        ]
-      },
-      {
         test: /\.s?[ac]ss$/,
         use: [
            development ? 'style-loader' : MiniCssExtractPlugin.loader,
            'css-loader',
            'sass-loader',
         ],
+      },
+      {
+        test:/\.(woff)|(ttf)|(eot)$/,
+        use: [{
+          loader: 'file-loader',
+          options: {
+            publicPath: 'fonts/'
+          }
+        }]
       },
       {
         test: /\.png$/,
