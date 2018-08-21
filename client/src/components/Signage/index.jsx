@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Query } from 'react-apollo'
 
-import { allEvents } from '../../../../lib/api'
+import { EVENTS } from '../../../../lib/queries'
 
 import SignageEvent from '../SignageEvent'
 
@@ -43,7 +43,7 @@ const Component = () => (
     <SectionHeader>Upcoming Events</SectionHeader>
     <Signage>
       <Query
-        query={allEvents}
+        query={EVENTS}
         variables={{
           futureOnly: process.env.NODE_ENV === 'production', // switch to true in prod
           displayOnSignage: true,

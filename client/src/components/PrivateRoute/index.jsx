@@ -4,13 +4,13 @@ import { Query } from 'react-apollo'
 
 import FullPageError from '../FullPageError'
 
-import { me } from '../../../../lib/queries'
+import { ME } from '../../../../lib/queries'
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={props => (
-      <Query query={me}>
+      <Query query={ME}>
         {({ data, error }) => {
           if (error) { return <FullPageError error={error} /> }
 

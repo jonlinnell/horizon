@@ -12,7 +12,7 @@ import { ApolloConsumer } from 'react-apollo'
 
 import history from '../../history'
 
-import { authenticate } from '../../../../lib/queries'
+import { AUTHENTICATE } from '../../../../lib/queries'
 
 const LoginWrapper = styled.div`
   height: 100vh;
@@ -62,7 +62,7 @@ const LoginBox = () => (
           setSubmitting(true)
           try {
             const { data } = await client.query({
-              query: authenticate,
+              query: AUTHENTICATE,
               variables: values,
             })
             localStorage.setItem('token', data.authenticate)
