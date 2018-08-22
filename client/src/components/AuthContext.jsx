@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 
 import client from '../apolloClient'
-import { AUTHENTICATE } from '../../../lib/queries'
+import { AUTHENTICATE, ME } from '../../../lib/queries'
 
 const AuthContext = React.createContext()
 
@@ -13,6 +13,7 @@ class AuthProvider extends PureComponent {
 
     this.login = this.login.bind(this)
     this.logout = this.logout.bind(this)
+    this.resume = this.resume.bind(this)
   }
 
   async login(credentials, callback) {
@@ -33,6 +34,17 @@ class AuthProvider extends PureComponent {
     this.setState({ isAuthenticated: false })
   }
 
+  async resume(callback) {
+    try {
+      const { data } = await client.query({ query: ME })
+      if (data) {
+        this.setState({ isAuthenticated: true })
+      }
+    } catch (error) {
+      callback(error)
+    }
+  }
+
   render() {
     const { state: { isAuthenticated }, props: { children } } = this
     return (
@@ -41,6 +53,7 @@ class AuthProvider extends PureComponent {
           isAuthenticated,
           login: this.login,
           logout: this.logout,
+          resume: this.resume,
         }}
       >
         {children}

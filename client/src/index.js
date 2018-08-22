@@ -47,12 +47,19 @@ const App = () => (
       <ThemeProvider theme={theme}>
         <Router history={history}>
           <AuthConsumer>
-            {({ isAuthenticated }) => (
-              <Switch>
-                <Route exact path="/signage" component={Signage} />
-                <ProtectedRoute path="/" component={isAuthenticated ? ViewAdmin : LoginBox} />
-              </Switch>
-            )}
+            {({ isAuthenticated, resume }) => {
+              // This is super glitchy and needs fixing!
+              if (localStorage.getItem('token')) {
+                resume(console.log)
+              }
+
+              return (
+                <Switch>
+                  <Route exact path="/signage" component={Signage} />
+                  <ProtectedRoute path="/" component={isAuthenticated ? ViewAdmin : LoginBox} />
+                </Switch>
+              )
+            }}
           </AuthConsumer>
         </Router>
       </ThemeProvider>
