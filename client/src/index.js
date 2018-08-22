@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Router, Route } from 'react-router'
+import { Router, Route, Switch } from 'react-router'
 import { injectGlobal, ThemeProvider } from 'styled-components'
 import { ApolloProvider } from 'react-apollo'
 
@@ -13,24 +13,14 @@ import '@blueprintjs/icons/lib/css/blueprint-icons.css'
 
 import theme from './theme.json'
 
+import { AuthProvider, AuthConsumer } from './components/AuthContext'
+
 import history from './history'
 
-import PrivateRoute from './components/PrivateRoute'
-import LoginBox from './components/LoginBox'
+import ProtectedRoute from './components/ProtectedRoute'
 import Signage from './components/Signage'
-import ViewMain from './components/ViewMain'
-
-const PrivateThing = () => (
-  <div>
-    <p>If you can see this, you&apos;re logged in.</p>
-  </div>
-)
-
-const Temp = () => (
-  <div>
-    tester!
-  </div>
-)
+import ViewAdmin from './components/ViewAdmin'
+import LoginBox from './components/LoginBox'
 
 /* eslint-disable-next-line no-unused-expressions */
 injectGlobal`
@@ -52,18 +42,22 @@ injectGlobal`
 `
 
 const App = () => (
-  <ApolloProvider client={client}>
-    <ThemeProvider theme={theme}>
-      <Router history={history}>
-        <div>
-          <PrivateRoute exact path="/temp" component={ViewMain} page={Temp} />
-          <PrivateRoute exact path="/priv" component={ViewMain} page={PrivateThing} />
-          <Route exact path="/signage" component={Signage} />
-          <Route exact path="/login" component={LoginBox} />
-        </div>
-      </Router>
-    </ThemeProvider>
-  </ApolloProvider>
+  <AuthProvider>
+    <ApolloProvider client={client}>
+      <ThemeProvider theme={theme}>
+        <Router history={history}>
+          <AuthConsumer>
+            {({ isAuthenticated }) => (
+              <Switch>
+                <Route exact path="/signage" component={Signage} />
+                <ProtectedRoute path="/" component={isAuthenticated ? ViewAdmin : LoginBox} />
+              </Switch>
+            )}
+          </AuthConsumer>
+        </Router>
+      </ThemeProvider>
+    </ApolloProvider>
+  </AuthProvider>
 )
 
 ReactDOM.render(<App />, document.getElementById('root'))

@@ -8,11 +8,8 @@ import {
 } from '@blueprintjs/core'
 import styled from 'styled-components'
 import { Formik } from 'formik'
-import { ApolloConsumer } from 'react-apollo'
 
-import history from '../../history'
-
-import { AUTHENTICATE } from '../../../../lib/queries'
+import { AuthConsumer } from '../AuthContext'
 
 const LoginWrapper = styled.div`
   height: 100vh;
@@ -37,8 +34,8 @@ const ErrorText = styled.span`
 `
 
 const LoginBox = () => (
-  <ApolloConsumer>
-    {client => (
+  <AuthConsumer>
+    {({ login }) => (
       <Formik
         initialValues={{
           username: '',
@@ -55,21 +52,12 @@ const LoginBox = () => (
             return errors
           }
         }
-        onSubmit={async (
+        onSubmit={(
           values,
           { setSubmitting, setErrors }
         ) => {
           setSubmitting(true)
-          try {
-            const { data } = await client.query({
-              query: AUTHENTICATE,
-              variables: values,
-            })
-            localStorage.setItem('token', data.authenticate)
-            history.push('/')
-          } catch (error) {
-            setErrors(error)
-          }
+          login(values, setErrors)
           setSubmitting(false)
         }}
         render={({
@@ -127,7 +115,7 @@ const LoginBox = () => (
         )}
       />
     )}
-  </ApolloConsumer>
+  </AuthConsumer>
 )
 
 export default LoginBox
