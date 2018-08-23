@@ -2,14 +2,14 @@ import React from 'react'
 import {
   Intent,
   Card,
-  H3,
+  H5,
 } from '@blueprintjs/core'
 
 import { NotificationsConsumer } from './NotificationsContext'
 
 const ViewAddEvent = () => (
   <Card>
-    <H3>Add event</H3>
+    <H5>Add event</H5>
     <NotificationsConsumer>
       {
         ({ addError, addNotification }) => (
