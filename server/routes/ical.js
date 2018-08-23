@@ -3,11 +3,11 @@ import { get } from 'lodash'
 
 import { calendar } from '../config/config.json'
 
-import request, { allEvents } from '../../lib/api'
+import request, { EVENTS } from '../../lib/api'
 
 const cal = ical(calendar)
 
-const registerIcalRoute = app => app.get('/events.ics', (req, res) => request(allEvents, {
+const registerIcalRoute = app => app.get('/events.ics', (req, res) => request(EVENTS, {
   futureOnly: false,
   includeInCalendar: true,
 })
