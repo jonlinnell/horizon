@@ -33,6 +33,7 @@ injectGlobal`
 
   *, *:before, *:after {
     box-sizing: inherit;
+    outline: none !important;
   }
 
   body {
