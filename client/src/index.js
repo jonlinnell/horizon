@@ -14,6 +14,8 @@ import '@blueprintjs/icons/lib/css/blueprint-icons.css'
 import theme from './theme.json'
 
 import { AuthProvider, AuthConsumer } from './components/AuthContext'
+import { NotificationsProvider } from './components/NotificationsContext'
+import NotificationsToaster from './components/NotificationsToaster'
 
 import history from './history'
 
@@ -44,27 +46,32 @@ injectGlobal`
 
 const App = () => (
   <AuthProvider>
-    <ApolloProvider client={client}>
-      <ThemeProvider theme={theme}>
-        <Router history={history}>
-          <AuthConsumer>
-            {({ isAuthenticated, resume }) => {
-              // This is super glitchy and needs fixing!
-              if (localStorage.getItem('token')) {
-                resume(console.log)
-              }
+    <NotificationsProvider>
+      <ApolloProvider client={client}>
+        <ThemeProvider theme={theme}>
+          <div>
+            <Router history={history}>
+              <AuthConsumer>
+                {({ isAuthenticated, resume }) => {
+                  // This is super glitchy and needs fixing!
+                  if (localStorage.getItem('token')) {
+                    resume(error => new Error(error))
+                  }
 
-              return (
-                <Switch>
-                  <Route exact path="/signage" component={Signage} />
-                  <ProtectedRoute path="/" component={isAuthenticated ? ViewAdmin : LoginBox} />
-                </Switch>
-              )
-            }}
-          </AuthConsumer>
-        </Router>
-      </ThemeProvider>
-    </ApolloProvider>
+                  return (
+                    <Switch>
+                      <Route exact path="/signage" component={Signage} />
+                      <ProtectedRoute path="/" component={isAuthenticated ? ViewAdmin : LoginBox} />
+                    </Switch>
+                  )
+                }}
+              </AuthConsumer>
+            </Router>
+            <NotificationsToaster />
+          </div>
+        </ThemeProvider>
+      </ApolloProvider>
+    </NotificationsProvider>
   </AuthProvider>
 )
 
