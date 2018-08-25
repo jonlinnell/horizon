@@ -2,9 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 import { Query } from 'react-apollo'
 
-import { EVENTS } from '../../../../lib/queries'
+import { EVENTS } from '../../../lib/queries'
 
-import SignageEvent from '../SignageEvent'
+import SignageEvent from './SignageEvent'
 
 const boxWidth = 492
 

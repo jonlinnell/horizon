@@ -22,7 +22,7 @@ import history from './history'
 import ProtectedRoute from './components/ProtectedRoute'
 import Signage from './components/Signage'
 import ViewAdmin from './components/ViewAdmin'
-import LoginBox from './components/LoginBox'
+import ViewLogin from './components/ViewLogin'
 
 /* eslint-disable-next-line no-unused-expressions */
 injectGlobal`
@@ -61,7 +61,7 @@ const App = () => (
                   return (
                     <Switch>
                       <Route exact path="/signage" component={Signage} />
-                      <ProtectedRoute path="/" component={isAuthenticated ? ViewAdmin : LoginBox} />
+                      <ProtectedRoute path="/" component={isAuthenticated ? ViewAdmin : ViewLogin} />
                     </Switch>
                   )
                 }}

@@ -2,7 +2,7 @@ import React from 'react'
 import { Route } from 'react-router'
 import { AuthConsumer } from './AuthContext'
 
-import LoginBox from './LoginBox'
+import ViewLogin from './ViewLogin'
 
 const ProtectedRoute = ({ component: Component, ...rest }) => (
   <AuthConsumer>
@@ -12,7 +12,7 @@ const ProtectedRoute = ({ component: Component, ...rest }) => (
           props => (
             isAuthenticated
               ? <Component {...props} />
-              : <LoginBox />
+              : <ViewLogin />
           )
         }
         {...rest}

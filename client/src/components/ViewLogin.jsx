@@ -9,7 +9,7 @@ import {
 import styled from 'styled-components'
 import { Formik } from 'formik'
 
-import { AuthConsumer } from '../AuthContext'
+import { AuthConsumer } from './AuthContext'
 
 const LoginWrapper = styled.div`
   height: 100vh;

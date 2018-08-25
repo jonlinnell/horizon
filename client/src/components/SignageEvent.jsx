@@ -2,10 +2,10 @@ import React from 'react'
 import styled from 'styled-components'
 import moment from 'moment'
 
-import iconLocation from '../../assets/images/location_pin_map.png'
-import iconTime from '../../assets/images/time_clock_watch.png'
+import iconLocation from '../assets/images/location_pin_map.png'
+import iconTime from '../assets/images/time_clock_watch.png'
 
-import DateTile from '../DateTile'
+import DateTile from './DateTile'
 
 const StyledSignageEvent = styled.div`
 
