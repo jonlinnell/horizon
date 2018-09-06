@@ -30,10 +30,7 @@ module.exports = {
       {
         test:/\.(woff)|(ttf)|(eot)$/,
         use: [{
-          loader: 'file-loader',
-          options: {
-            publicPath: 'fonts/'
-          }
+          loader: 'file-loader'
         }]
       },
       {

@@ -17,6 +17,7 @@
   "license": "MIT",
   "dependencies": {
     "@blueprintjs/core": "^3.3.0",
+    "@blueprintjs/datetime": "^3.1.0",
     "@blueprintjs/icons": "^3.0.0",
     "apollo-boost": "^0.1.14",
     "apollo-cache-inmemory": "^1.2.7",
