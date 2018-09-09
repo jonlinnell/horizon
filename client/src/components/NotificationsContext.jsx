@@ -31,7 +31,7 @@ class NotificationsProvider extends PureComponent {
     this.setState({
       notifications: [...notifications, {
         index: notifications.length + 1,
-        message,
+        message: JSON.stringify(message, null, 2),
         intent: Intent.DANGER,
       }],
     })

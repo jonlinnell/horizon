@@ -9,18 +9,18 @@ import {
   Button,
   Checkbox,
 } from '@blueprintjs/core'
-import { DateRangePicker, TimePrecision } from '@blueprintjs/datetime'
-import { withFormik } from 'formik'
+import { DateInput, TimePrecision } from '@blueprintjs/datetime'
+import { Formik, Form } from 'formik'
 import { Mutation } from 'react-apollo'
 import styled from 'styled-components'
 
 import '@blueprintjs/datetime/lib/css/blueprint-datetime.css'
 
-import { validation } from '../../../server/config/config.json'
-
 import { CREATE_NEW_EVENT } from '../../../lib/queries'
 
 import { NotificationsConsumer } from './NotificationsContext'
+
+import schemaAddEvent from '../schema/schemaAddEvent'
 
 const InputErrorText = styled.p`
   margin-left: auto;
@@ -28,31 +28,16 @@ const InputErrorText = styled.p`
   color: ${Colors.RED2};
 `
 
-const initialValues = {
-  title: null,
-  dateStart: null,
-  dateEnd: null,
-  summary: null,
-  location: null,
-  url: null,
-  public: null,
-  displayOnSignage: true,
-  includeInCalendar: true,
-  ticketed: true,
-  speakers: null,
-}
-
-const FormAddEvent = ({
+const FormComponent = ({
   errors,
   touched,
   handleChange,
   handleBlur,
-  handleSubmit,
+  setFieldValue,
   isSubmitting,
 }) => (
-  <form onSubmit={handleSubmit}>
+  <Form>
     <FormGroup
-      helperText="A title for the event."
       label="Event Name"
       labelFor="title"
       labelInfo="(required)"
@@ -71,14 +56,33 @@ const FormAddEvent = ({
     </FormGroup>
 
     <FormGroup
-      helperText="When does this event start and finish?"
+      label="Starting at"
+      labelFor="dateStart"
     >
-      <DateRangePicker
-        allowSingleDayRange
-        contiguousCalendarMonths={false}
+      <DateInput
+        name="dateStart"
+        formatDate={date => date.toLocaleString()}
+        shortcuts={false}
+        onChange={date => setFieldValue('dateStart', date.toISOString())}
+        parseDate={str => new Date(str)}
         timePrecision={TimePrecision.MINUTE}
-        timePickerProps={{}}
       />
+      { touched && !isSubmitting && <InputErrorText>{errors.dateStart}</InputErrorText> }
+    </FormGroup>
+
+    <FormGroup
+      label="Ending at"
+      labelFor="dateEnd"
+    >
+      <DateInput
+        name="dateEnd"
+        formatDate={date => date.toLocaleString()}
+        shortcuts={false}
+        onChange={date => setFieldValue('dateEnd', date.toISOString())}
+        parseDate={str => new Date(str)}
+        timePrecision={TimePrecision.MINUTE}
+      />
+      { touched && !isSubmitting && <InputErrorText>{errors.dateEnd}</InputErrorText> }
     </FormGroup>
 
     <FormGroup
@@ -162,36 +166,8 @@ const FormAddEvent = ({
       intent={Intent.PRIMARY}
       text="Submit"
     />
-  </form>
+  </Form>
 )
-
-const EnhancedFormAddEvent = withFormik({
-  mapPropsToValues: () => (initialValues),
-  validate: (values) => {
-    const { titleLength, summaryLength } = validation
-    const errors = {}
-
-    if (!values.title) {
-      errors.title = 'This field is required.'
-    } else if (values.title.length > Number(titleLength)) {
-      errors.title = `Title is too long. Max length: ${titleLength}.`
-    }
-
-    if (values.summary) {
-      if (values.summary.length > Number(summaryLength)) {
-        errors.summary = 'Too long!'
-      }
-    }
-
-    return errors
-  },
-  handleSubmit: (values, { setSubmitting }) => {
-    setTimeout(() => {
-      onSubmit(values)
-      setSubmitting(false)
-    }, 1000)
-  },
-})(FormAddEvent)
 
 const ViewAddEvent = () => (
   <Card>
@@ -200,7 +176,16 @@ const ViewAddEvent = () => (
       {({ addError, addNotification }) => (
         <Mutation mutation={CREATE_NEW_EVENT}>
           {(addEvent, { loading, error, data }) => (
-            <EnhancedFormAddEvent />
+            <Formik
+              validationSchema={schemaAddEvent}
+              onSubmit={(values, { setSubmitting }) => {
+                addEvent({ variables: values })
+                  .then(apolloResponse => alert(JSON.stringify(apolloResponse)))
+                  .catch(apolloError => alert(JSON.stringify(apolloError)))
+                setSubmitting(false)
+              }}
+              render={FormComponent}
+            />
           )}
         </Mutation>
       )}
